@@ -1,0 +1,128 @@
+
+              <!doctype html>
+              <html lang="ru">
+              
+              <head>
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <title>До начала:</title>
+                <style>
+
+                    @font-face {
+                        font-family: TTFirsNeue; /* Гарнитура шрифта */
+                        src: url(fonts/TTFirsNeue-Medium.ttf); /* Путь к файлу со шрифтом */
+                    }
+                  *,
+                  *::before,
+                  *::after {
+                    box-sizing: border-box;
+                  }
+              
+                  @media (prefers-reduced-motion: no-preference) {
+                    :root {
+                      scroll-behavior: smooth;
+                    }
+                  }
+              
+                  body {
+                    margin: 0;
+                    font-family: TTFirsNeue;
+                    font-size: 1rem;
+                    font-weight: 400;
+                    line-height: 1.5;
+                    color: #8b8feb;
+                    background-color: #fff;
+                    -webkit-text-size-adjust: 100%;
+                    -webkit-tap-highlight-color: #0000;
+                    display: flex;
+                    justify-content: center;
+                  }
+                  .timer{
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    
+                  }
+                  .timer__title{
+                    margin:0;
+                  }
+                  .timer__items {
+                    display: flex;
+                    font-size: 48px;
+                  }
+              
+                  .timer__item {
+                    position: relative;
+                    min-width: 60px;
+                    margin-left: 10px;
+                    margin-right: 10px;
+                    padding-bottom: 15px;
+                    text-align: center;
+                  }
+              
+                  .timer__item::before {
+                    content: attr(data-title);
+                    display: block;
+                    position: absolute;
+                    left: 50%;
+                    bottom: 0;
+                    transform: translateX(-50%);
+                    font-size: 14px;
+                  }
+              
+                  .timer__item:not(:last-child)::after {
+                    content: ':';
+                    position: absolute;
+                    right: -15px;
+                  }
+                </style>
+                <script>
+                  document.addEventListener('DOMContentLoaded', function () {
+       
+                    const deadline = new Date(Date.now()+900000);
+              
+                    let timerId = null;
+           
+                    function declensionNum(num, words) {
+                      return words[(num % 100 > 4 && num % 100 < 20) ? 2 : [2, 0, 1, 1, 1, 2][(num % 10 < 5) ? num % 10 : 5]];
+                    }
+                
+                    function countdownTimer() {
+                      const diff = deadline - new Date();
+                      if (diff <= 0) {
+                        clearInterval(timerId);
+                      }
+                     
+                      const minutes = diff > 0 ? Math.floor(diff / 1000 / 60) % 60 : 0;
+                      const seconds = diff > 0 ? Math.floor(diff / 1000) % 60 : 0;
+                      $minutes.textContent = minutes < 10 ? '0' + minutes : minutes;
+                      $seconds.textContent = seconds < 10 ? '0' + seconds : seconds;
+                    
+                    }
+        
+                    const $minutes = document.querySelector('.timer__minutes');
+                    const $seconds = document.querySelector('.timer__seconds');
+                   
+                    countdownTimer();
+                
+                    timerId = setInterval(countdownTimer, 1000);
+                  });
+                </script>
+              </head>
+              
+              <body>
+              
+                <div class="timer">
+                    <h1 class="timer__title">До начала:</h1>
+                  <div class="timer__items">
+                    <div class="timer__item timer__minutes">00</div>
+                    <div class="timer__item timer__seconds">00</div>
+                  </div>
+                </div>
+              
+              </body>
+              
+              </html>
+              
+                                      
